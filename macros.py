@@ -26,12 +26,13 @@ MACROS = {
 }
 
 def expand_macros(line):
+    line=line.strip()
     parts = line.split()
 
     if not parts:
         return [line]
 
-    command = parts[0]
+    command = parts[0].upper()
 
     #Static macros
     if command in MACROS and len(parts) == 1:
