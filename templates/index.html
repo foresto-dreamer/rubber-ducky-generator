@@ -3,6 +3,9 @@
 <head>
     <title>Rubber Ducky Script Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 </head>
 <body>
 
@@ -21,11 +24,19 @@
         <div class="box">
             <h2>Output Stream</h2>
             <div class="output">
-                <pre>{{ output if output else "Processed output will appear here..." }}</pre>
+                <pre><code class="language-bash">{{ output | safe }}</code></pre>
             </div>
+            {% if output and "ERROR" not in output %}
+            <form method="POST" action="/download">
+                <input type="hidden" name="output" value="{{ output }}">
+                <button type="submit">Download Script</button>
+            </form>
+            {% endif %}
         </div>
     </div>
 </div>
-
+<script>
+    Prism.highlightAll();
+</script>
 </body>
 </html>

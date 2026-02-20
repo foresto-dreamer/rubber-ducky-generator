@@ -2,7 +2,8 @@ from macros import expand_macros
 
 VALID_COMMANDS = [
     "REM", "DELAY", "STRING", "ENTER",
-    "GUI", "CTRL", "SHIFT", "ALT", "ESC"
+    "GUI", "CTRL", "SHIFT", "ALT",
+    "TAB", "ESC","UP", "DOWN", "LEFT", "RIGHT"
 ]
 
 def parse_script(input_text):

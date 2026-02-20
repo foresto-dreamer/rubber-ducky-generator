@@ -25,6 +25,12 @@ MACROS = {
     ]
 }
 
+VALID_KEYS = {
+    "ENTER", "ESC", "TAB",
+    "UP", "DOWN", "LEFT", "RIGHT",
+    "CTRL", "SHIFT", "ALT"
+}
+
 def expand_macros(line):
     line=line.strip()
     parts = line.split()
@@ -57,5 +63,22 @@ def expand_macros(line):
             f"STRING {app}",
             "ENTER"
         ]
+    
+    # WAIT <ms>
+    if command == "WAIT" and len(parts) == 2:
+        return [f"DELAY {parts[1]}"]
 
+    # TYPE <text>
+    if command == "TYPE" and len(parts) >= 2:
+        text = " ".join(parts[1:])
+        return [f"STRING {text}"]
+
+    # PRESS <key>
+    if command == "PRESS" and len(parts) == 2:
+        key = parts[1].upper()
+        if key in VALID_KEYS:
+            return[key]
+        else:
+            return [f"ERROR_INVALID_KEY {key}"]
+    
     return [line]
