@@ -58,3 +58,18 @@ button {
     border: 1px solid #00f7ff55;
     color: #00ff9d;
 }
+button:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+textarea:focus {
+    outline: none;
+    border: 1px solid #00f7ff;
+}
+
+@media (max-width: 768px) {
+    .editor-section {
+        flex-direction: column;
+    }
+}

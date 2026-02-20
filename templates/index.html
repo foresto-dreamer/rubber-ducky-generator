@@ -10,13 +10,13 @@
 <body>
 
 <div class="container">
-    <h1>🛡 Script Processor</h1>
+    <h1>Script Processor</h1>
 
     <div class="editor-section">
         <div class="box">
             <h2>Input Script</h2>
             <form method="POST" action="/generate">
-                <textarea name="script" placeholder="Enter your script here..."></textarea>
+                <textarea name="script" placeholder="Enter your script here...">{{ request.form.script }}</textarea>
                 <button type="submit">Generate Output</button>
             </form>
         </div>
@@ -28,7 +28,7 @@
             </div>
             {% if output and "ERROR" not in output %}
             <form method="POST" action="/download">
-                <input type="hidden" name="output" value="{{ output }}">
+                <input type="hidden" name="output" value="{{ output | e }}">
                 <button type="submit">Download Script</button>
             </form>
             {% endif %}
