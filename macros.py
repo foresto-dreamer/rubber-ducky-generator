@@ -26,4 +26,35 @@ MACROS = {
 }
 
 def expand_macros(line):
-    return MACROS.get(line, [line])
+    parts = line.split()
+
+    if not parts:
+        return [line]
+
+    command = parts[0]
+
+    #Static macros
+    if command in MACROS and len(parts) == 1:
+        return MACROS[command]
+
+    #for browsser
+    if command == "OPEN_BROWSER" and len(parts) == 2:
+        url = parts[1]
+        return [
+            "GUI r",
+            "DELAY 200",
+            f"STRING https://{url}",
+            "ENTER"
+        ]
+
+    #for app
+    if command == "OPEN_APP" and len(parts) == 2:
+        app = parts[1]
+        return [
+            "GUI r",
+            "DELAY 200",
+            f"STRING {app}",
+            "ENTER"
+        ]
+
+    return [line]
