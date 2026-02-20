@@ -1,1 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rubber Ducky Script Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
 
+<div class="container">
+    <h1>🛡 Script Processor</h1>
+
+    <div class="editor-section">
+        <div class="box">
+            <h2>Input Script</h2>
+            <form method="POST" action="/generate">
+                <textarea name="script" placeholder="Enter your script here..."></textarea>
+                <button type="submit">Generate Output</button>
+            </form>
+        </div>
+
+        <div class="box">
+            <h2>Output Stream</h2>
+            <div class="output">
+                <pre>{{ output if output else "Processed output will appear here..." }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
