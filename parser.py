@@ -1,6 +1,9 @@
 from macros import expand_macros
 
-VALID_COMMANDS = ["REM", "DELAY", "STRING", "ENTER", "GUI"]
+VALID_COMMANDS = [
+    "REM", "DELAY", "STRING", "ENTER",
+    "GUI", "CTRL", "SHIFT", "ALT", "ESC"
+]
 
 def parse_script(input_text):
     lines = input_text.split("\n")
