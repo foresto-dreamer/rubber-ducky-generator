@@ -14,7 +14,7 @@ def home():
 def generate():
     user_input = request.form['script']
     output = parse_script(user_input)
-    return render_template("index.html", output=output)
+    return render_template("index.html", output=output,script=user_input)
 
 @app.route('/download', methods=['POST'])
 def download():

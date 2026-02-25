@@ -1,42 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Rubber Ducky Script Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubber Ducky Generator | Security Tool</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-    <h1>Script Processor</h1>
+    <header>
+        <h1><span class="glyph">⌨</span> DuckyScript Generator</h1>
+        <p class="subtitle">Second-Year CSE Payload Architect</p>
+    </header>
 
-    <div class="editor-section">
-        <div class="box">
-            <h2>Input Script</h2>
-            <form method="POST" action="/generate">
-                <textarea name="script" placeholder="Enter your script here...">{{ request.form.script }}</textarea>
-                <button type="submit">Generate Output</button>
-            </form>
-        </div>
+    <div class="main-layout">
+        <aside class="macro-sidebar box">
+            <h3>Payload Library</h3>
+            <ul>
+                <li><code>OPEN_POWERSHELL</code></li>
+                <li><code>OPEN_CMD</code></li>
+                <li><code>OPEN_NOTEPAD</code></li>
+                <li><code>LOCK_SCREEN</code></li>
+                <li><code>OPEN_BROWSER [url]</code></li>
+                <li><code>WAIT [ms]</code></li>
+            </ul>
+        </aside>
 
-        <div class="box">
-            <h2>Output Stream</h2>
-            <div class="output">
-                <pre><code class="language-bash">{{ output | safe }}</code></pre>
+        <section class="editor-section">
+            <div class="box">
+                <h2>Input Script</h2>
+                <form method="POST" action="/generate">
+                    <textarea name="script" spellcheck="false" placeholder="Example: OPEN_POWERSHELL...">{{script if script else ''}}</textarea>
+                    <button type="submit" class="btn-generate">GENERATE PAYLOAD</button>
+                </form>
             </div>
-            {% if output and "ERROR" not in output %}
-            <form method="POST" action="/download">
-                <input type="hidden" name="output" value="{{ output | e }}">
-                <button type="submit">Download Script</button>
-            </form>
-            {% endif %}
-        </div>
+
+            <div class="box">
+                <h2>Output Stream</h2>
+                <div class="output-container">
+                    <pre><code class="language-bash">{{ output | safe if output else 'Waiting for input...' }}</code></pre>
+                </div>
+                
+                {% if output and "ERROR" not in output %}
+                <form method="POST" action="/download">
+                    <input type="hidden" name="output" value="{{ output | e }}">
+                    <button type="submit" class="btn-download">DOWNLOAD .TXT</button>
+                </form>
+                {% endif %}
+            </div>
+        </section>
     </div>
 </div>
-<script>
-    Prism.highlightAll();
-</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 </body>
 </html>

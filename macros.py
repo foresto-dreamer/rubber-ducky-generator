@@ -28,7 +28,7 @@ MACROS = {
 VALID_KEYS = {
     "ENTER", "ESC", "TAB",
     "UP", "DOWN", "LEFT", "RIGHT",
-    "CTRL", "SHIFT", "ALT"
+    "CTRL", "SHIFT", "ALT", "WINDOWS", "GUI", "SPACE", "BACKSPACE"
 }
 
 def expand_macros(line):
@@ -47,6 +47,8 @@ def expand_macros(line):
     #for browsser
     if command == "OPEN_BROWSER" and len(parts) == 2:
         url = parts[1]
+        if "." not in url:
+            return["ERROR:Invalid url"]
         return [
             "GUI r",
             "DELAY 200",
@@ -66,7 +68,10 @@ def expand_macros(line):
     
     # WAIT <ms>
     if command == "WAIT" and len(parts) == 2:
-        return [f"DELAY {parts[1]}"]
+        if parts[1].isdigit():
+            return [f"DELAY {parts[1]}"]
+        else:
+            return["ERROR:Invalid delay value"]
 
     # TYPE <text>
     if command == "TYPE" and len(parts) >= 2:
@@ -79,6 +84,6 @@ def expand_macros(line):
         if key in VALID_KEYS:
             return[key]
         else:
-            return [f"ERROR_INVALID_KEY {key}"]
+            return [f"ERROR:Invalid key '{key}'"]
     
     return [line]
