@@ -1,24 +1,22 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, request, send_file, jsonify
+from flask_cors import CORS
 from parser import parse_script
 import io
 
 print("APP STARTING...")
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/generate', methods=['POST'])
+@app.route("/generate", methods=["POST"])
 def generate():
-    user_input = request.form['script']
+    user_input = request.json.get("script")
     output = parse_script(user_input)
-    return render_template("index.html", output=output,script=user_input)
+    return jsonify({"output": output})
 
-@app.route('/download', methods=['POST'])
+@app.route("/download", methods=["POST"])
 def download():
-    output=request.form['output']
+    output = request.json.get("output")
 
     return send_file(
         io.BytesIO(output.encode()),
